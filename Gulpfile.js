@@ -21,6 +21,11 @@ gulp.task('views', function () {
         .pipe(gulp.dest('.tmp/views/'));
 });
 
+gulp.task('fonts', function () {
+    gulp.src('src/font/**/*.{ttf,woff,woff2}')
+        .pipe(gulp.dest('.tmp/font/'));
+});
+
 gulp.task('usemin', function () {
     return gulp.src('src/index.html')
         .pipe($.usemin({
@@ -40,7 +45,7 @@ gulp.task('scripts', ['scripts:compile', 'usemin'], function () {
         .pipe(gulp.dest('.tmp/scripts'));
 });
 
-gulp.task('serve', ['scripts', 'views'], function () {
+gulp.task('serve', ['scripts', 'views', 'font'], function () {
     gulp.src('.tmp')
         .pipe($.webserver({
             livereload: true,
@@ -50,6 +55,7 @@ gulp.task('serve', ['scripts', 'views'], function () {
 
     gulp.watch('src/index.html', ['scripts']);
     gulp.watch('src/views/**/*.html', ['views']);
+    gulp.watch('**/*.{ttf,woff,woff2}', ['views']);
     gulp.watch('src/scripts/**/*.ts', ['scripts']);
     gulp.watch('node_modules/**/*.js', ['usemin']);
 });
